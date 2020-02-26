@@ -1,0 +1,75 @@
+package com.example.android.bakingapp.adapter;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.RecipeListFragment;
+import com.example.android.bakingapp.model.Recipe;
+
+public class RecipeListNameAdapter extends RecyclerView.Adapter<RecipeListNameAdapter.ViewHolder> {
+
+    private static Recipe[] recipes;
+    private Context context;
+    RecipeListFragment.OnRecipeSelectedListener listener;
+
+    // Pass data into the constructor
+    public RecipeListNameAdapter(Recipe[] recipes, Context context, RecipeListFragment.OnRecipeSelectedListener listener) {
+        this.context = context;
+        this.recipes = recipes;
+        this.listener = listener;
+    }
+
+    // Store and recycle views as they are scrolled off screen
+    // Provide a reference to the item views in viewholder
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView recipeNameTV;
+
+        public ViewHolder(ConstraintLayout itemView) {
+            super (itemView);
+
+            recipeNameTV = itemView.findViewById (R.id.recipeName);
+        }
+    }
+
+    // Inflate the cell layout from xml when needed (invoked by Layout Manager)
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // create a new view
+        ConstraintLayout view = (ConstraintLayout) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recipe_name_list_item, parent, false);
+        ViewHolder vh = new ViewHolder(view);
+        return vh;
+    }
+
+    // Bind the data to the view in each item (invoked by Layout Manager)
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // Get element from the dataset at this position
+        // Replace the contents of the view with that element
+        String recipeName = recipes[position].getRecipeName();
+        holder.recipeNameTV.setText(recipeName);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onRecipeSelected(recipes[position]);
+            }
+        });
+    }
+
+    // Total number of items
+    // Return the size of your dataset (invoked by the Layout Manager)
+    @Override
+    public int getItemCount() {
+        if (recipes == null || recipes.length == 0) {
+            return -1;
+        }
+        return recipes.length;
+    }
+}
