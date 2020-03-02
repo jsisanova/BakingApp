@@ -1,7 +1,7 @@
 package com.example.android.bakingapp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.utils.Constants;
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.frame_container, listFragment)
+                .replace(R.id.frame_container, listFragment)
                 .commit();
 
         getSupportFragmentManager()
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
                 .addOnBackStackChangedListener(this::onBackStackChanged);
     }
 
+    //  Implement abstract method onRecipeSelected() of interface OnRecipeSelectedListener
     @Override
     public void onRecipeSelected(Recipe recipe) {
         // Pass an object that implements Parcelable from an activity to a fragment

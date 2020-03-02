@@ -21,8 +21,8 @@ public class Constants {
 
     public final static String STEPS_SHORT_DESCRIPTION_KEY = "shortDescription";
     public final static String STEPS_LONG_DESCRIPTION_KEY = "description";
-    public final static String STEPS_VIDEO_URL = "videoURL";
-    public final static String STEPS_THUMBNAIL_URL = "thumbnailURL";
+    public final static String STEPS_VIDEO_URL_KEY = "videoURL";
+    public final static String STEPS_THUMBNAIL_URL_KEY = "thumbnailURL";
 
 
     // Parcelable keys

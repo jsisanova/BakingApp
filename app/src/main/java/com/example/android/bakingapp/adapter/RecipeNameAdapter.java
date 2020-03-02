@@ -12,16 +12,16 @@ import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.RecipeListFragment;
 import com.example.android.bakingapp.model.Recipe;
 
-public class RecipeListNameAdapter extends RecyclerView.Adapter<RecipeListNameAdapter.ViewHolder> {
+public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.ViewHolder> {
 
     private static Recipe[] recipes;
     private Context context;
     RecipeListFragment.OnRecipeSelectedListener listener;
 
     // Pass data into the constructor
-    public RecipeListNameAdapter(Recipe[] recipes, Context context, RecipeListFragment.OnRecipeSelectedListener listener) {
-        this.context = context;
+    public RecipeNameAdapter(Recipe[] recipes, Context context, RecipeListFragment.OnRecipeSelectedListener listener) {
         this.recipes = recipes;
+        this.context = context;
         this.listener = listener;
     }
 
@@ -31,9 +31,9 @@ public class RecipeListNameAdapter extends RecyclerView.Adapter<RecipeListNameAd
         TextView recipeNameTV;
 
         public ViewHolder(ConstraintLayout itemView) {
-            super (itemView);
+            super(itemView);
 
-            recipeNameTV = itemView.findViewById (R.id.recipeName);
+            recipeNameTV = itemView.findViewById(R.id.recipeName);
         }
     }
 

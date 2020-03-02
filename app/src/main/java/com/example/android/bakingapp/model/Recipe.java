@@ -3,16 +3,18 @@ package com.example.android.bakingapp.model;
 import android.os.Parcelable;
 import android.os.Parcel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Recipe implements Parcelable {
+
     private int recipeId;
     private String recipeName;
-    private double ingredientsQuantity;
-    private String ingredientsMeasure;
-    private String ingredientsName;
     private String steps;
     private int servings;
     private String imagePath;
+    private List<Ingredient> ingredients = null;
 
     public Recipe() { }
 
@@ -24,15 +26,6 @@ public class Recipe implements Parcelable {
     public void setRecipeName(String recipeName) {
         this.recipeName = recipeName;
     }
-    public void setIngredientsQuantity(double ingredientsQuantity) {
-        this.ingredientsQuantity = ingredientsQuantity;
-    }
-    public void setIngredientsMeasureType(String ingredientsMeasureType) {
-        this.ingredientsMeasure = ingredientsMeasureType;
-    }
-    public void setIngredientsName(String ingredientsName) {
-        this.ingredientsName = ingredientsName;
-    }
     public void setSteps(String steps) {
         this.steps = steps;
     }
@@ -42,6 +35,9 @@ public class Recipe implements Parcelable {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
 
     // Getter methods
     public int getRecipeId() {
@@ -49,15 +45,6 @@ public class Recipe implements Parcelable {
     }
     public String getRecipeName() {
         return recipeName;
-    }
-    public double getIngredientsQuantity() {
-        return ingredientsQuantity;
-    }
-    public String getIngredientsMeasureType() {
-        return ingredientsMeasure;
-    }
-    public String getIngredientsName() {
-        return ingredientsName;
     }
     public String getSteps() {
         return steps;
@@ -68,7 +55,9 @@ public class Recipe implements Parcelable {
     public String getImagePath() {
         return imagePath;
     }
-
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
 
 
     // Use Android Parcelable interface to transfer object and its data between activities
@@ -78,12 +67,10 @@ public class Recipe implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt (recipeId);
         dest.writeString(recipeName);
-        dest.writeDouble(ingredientsQuantity);
-        dest.writeString(ingredientsMeasure);
-        dest.writeString(ingredientsName);
         dest.writeString(steps);
         dest.writeInt(servings);
         dest.writeString(imagePath);
+        dest.writeList(ingredients);
     }
 
     // This method is the constructor, called on the receiving activity, where you will be collecting values.
@@ -96,12 +83,12 @@ public class Recipe implements Parcelable {
         // Read and set saved values from parcel
         recipeId = parcel.readInt();
         recipeName = parcel.readString();
-        ingredientsQuantity = parcel.readDouble();
-        ingredientsMeasure = parcel.readString();
-        ingredientsName = parcel.readString();
         steps = parcel.readString();
         servings = parcel.readInt();
         imagePath = parcel.readString();
+
+        ingredients = new ArrayList<>();
+        parcel.readList(ingredients, Recipe.class.getClassLoader());
     }
 
     // This method binds everything together. There’s little needed to do here as the createFromParcel method will return newly populated object.

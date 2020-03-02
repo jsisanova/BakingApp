@@ -1,19 +1,20 @@
 package com.example.android.bakingapp;
 
 import android.content.Context;
-import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView.LayoutManager;
+import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.example.android.bakingapp.adapter.RecipeListNameAdapter;
+import com.example.android.bakingapp.adapter.RecipeNameAdapter;
+import com.example.android.bakingapp.model.Ingredient;
 import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.utils.Constants;
 import com.example.android.bakingapp.utils.JsonUtils;
@@ -24,14 +25,19 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 // This fragment displays all of the recipe names in one list (as RecyclerView)
 public class RecipeListFragment extends Fragment {
 
     private Recipe[] recipes;
-    private static RecyclerView mRecipeRecyclerView;
-    private static RecyclerView.Adapter mRecipeAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView mRecipeRecyclerView;
+    private Adapter mRecipeAdapter;
+    private LayoutManager mLayoutManager;
+
+    private Ingredient[] ingredients;
 
     // Define a new interface OnRecipeSelectedListener that triggers a callback in the host activity (MainActivity)
     OnRecipeSelectedListener mCallback;
@@ -96,10 +102,32 @@ public class RecipeListFragment extends Fragment {
             // Object contains all tags we're looking for
             JSONObject recipeInfo = resultsArray.getJSONObject(i);
 
-            // Store data in movie object
+            // Store data in recipe object
             recipes[i].setRecipeName(recipeInfo.getString(Constants.NAME_KEY));
             recipes[i].setRecipeId(recipeInfo.getInt(Constants.ID_KEY));
             recipes[i].setServings(recipeInfo.getInt(Constants.SERVINGS_KEY));
+
+
+            // Get ingredients as an array
+            JSONArray ingredientsArray = recipeInfo.getJSONArray(Constants.INGREDIENTS_KEY);
+            // Create array of Ingredient objects that stores data from the JSON string
+            ingredients = new Ingredient[ingredientsArray.length()];
+
+            // Iterate through ingredients and get data
+            for (int j = 0; j < ingredientsArray.length(); j++) {
+                // Initialize each object before it can be used
+                ingredients[j] = new Ingredient();
+
+                // Object contains all tags we're looking for
+                JSONObject ingredientInfo = ingredientsArray.getJSONObject(j);
+
+                // Store data in ingredient object
+                ingredients[j].setIngredientsQuantity(ingredientInfo.getDouble(Constants.INGREDIENTS_QUANTITY_KEY));
+                ingredients[j].setIngredientsMeasure(ingredientInfo.getString(Constants.INGREDIENTS_MEASURE_KEY).toLowerCase());
+                ingredients[j].setIngredientsName(ingredientInfo.getString (Constants.INGREDIENTS_NAME_KEY));
+            }
+
+            recipes[i].setIngredients(Arrays.asList(ingredients));
         }
         return recipes;
     }
@@ -134,7 +162,7 @@ public class RecipeListFragment extends Fragment {
 
         protected void onPostExecute(Recipe[] recipes) {
             // Create the adapter and Set the adapter on the RecyclerView
-            mRecipeAdapter = new RecipeListNameAdapter(recipes, getContext(), mCallback);
+            mRecipeAdapter = new RecipeNameAdapter(recipes, getContext(), mCallback);
             mRecipeRecyclerView.setAdapter(mRecipeAdapter);
         }
     }
