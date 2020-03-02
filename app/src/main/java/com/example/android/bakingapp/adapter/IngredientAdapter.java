@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         private TextView ingredientNameTV;
         private TextView ingredientMeasureTV;
 
-        public ViewHolder(ConstraintLayout itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
 
             ingredientQuantityTV = itemView.findViewById(R.id.ingredientQuantityTextView);
@@ -45,7 +46,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     @Override
     public IngredientAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // create a new view
-        ConstraintLayout view = (ConstraintLayout) LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.ingredient_list_item, parent, false);
         ViewHolder vh = new ViewHolder(view);
         return vh;
@@ -53,7 +54,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
     // Bind the data to the view in each item (invoked by Layout Manager)
     @Override
-    public void onBindViewHolder(@NonNull IngredientAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get element from the dataset at this position
         double quantity = ingredients.get(position).getIngredientsQuantity();
         String measureType = ingredients.get(position).getIngredientsMeasure();

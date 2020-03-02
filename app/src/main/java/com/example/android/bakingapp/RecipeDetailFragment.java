@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.adapter.IngredientAdapter;
+import com.example.android.bakingapp.adapter.StepAdapter;
 import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.utils.Constants;
 
@@ -25,7 +26,11 @@ public class RecipeDetailFragment extends Fragment {
 
     private RecyclerView mIngredientsRecyclerView;
     private Adapter mIngredientsAdapter;
-    private LayoutManager mLayoutManager;
+    private LayoutManager mIngredientsLayoutManager;
+
+    private RecyclerView mStepsRecyclerView;
+    private Adapter mStepsAdapter;
+    private LayoutManager mStepsLayoutManager;
 
     // Mandatory empty constructor for the fragment manager to instantiate the fragment
     public RecipeDetailFragment() { }
@@ -58,9 +63,10 @@ public class RecipeDetailFragment extends Fragment {
         recipeTitleTV.setText(recipe.getRecipeName());
         recipeServingsTV.setText(Integer.toString(recipe.getServings()));
 
+        // Set up ingredients RecyclerView
         mIngredientsRecyclerView = rootview.findViewById (R.id.ingredientsRecyclerView);
-        mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        mIngredientsRecyclerView.setLayoutManager(mLayoutManager);
+        mIngredientsLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        mIngredientsRecyclerView.setLayoutManager(mIngredientsLayoutManager);
         mIngredientsRecyclerView.setVisibility(View.GONE);
 
         //specify adapter
@@ -75,6 +81,17 @@ public class RecipeDetailFragment extends Fragment {
                 mIngredientsRecyclerView.setVisibility(View.VISIBLE);
             }
         });
+
+
+        // Set up steps RecyclerView
+        mStepsRecyclerView = rootview.findViewById(R.id.stepsRecyclerView);
+        mStepsLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        mStepsRecyclerView.setLayoutManager(mStepsLayoutManager);
+
+        //specify adapter
+        mStepsAdapter = new StepAdapter(recipe.getSteps(), getContext());
+        mStepsRecyclerView.setAdapter(mStepsAdapter);
+        mStepsRecyclerView.setNestedScrollingEnabled(false);
 
         // Return the rootview
         return rootview;

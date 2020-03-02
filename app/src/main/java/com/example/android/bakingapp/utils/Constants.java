@@ -1,5 +1,7 @@
 package com.example.android.bakingapp.utils;
 
+import org.json.JSONArray;
+
 public class Constants {
 
     // UI Titles

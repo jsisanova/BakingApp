@@ -5,10 +5,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView.LayoutManager;
-import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.Adapter;
+import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.android.bakingapp.adapter.RecipeNameAdapter;
 import com.example.android.bakingapp.model.Ingredient;
 import com.example.android.bakingapp.model.Recipe;
+import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.utils.Constants;
 import com.example.android.bakingapp.utils.JsonUtils;
 
@@ -25,9 +26,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 // This fragment displays all of the recipe names in one list (as RecyclerView)
 public class RecipeListFragment extends Fragment {
@@ -38,6 +37,7 @@ public class RecipeListFragment extends Fragment {
     private LayoutManager mLayoutManager;
 
     private Ingredient[] ingredients;
+    private Step[] steps;
 
     // Define a new interface OnRecipeSelectedListener that triggers a callback in the host activity (MainActivity)
     OnRecipeSelectedListener mCallback;
@@ -127,7 +127,28 @@ public class RecipeListFragment extends Fragment {
                 ingredients[j].setIngredientsName(ingredientInfo.getString (Constants.INGREDIENTS_NAME_KEY));
             }
 
+
+            // Get steps as an array
+            JSONArray stepsArray = recipeInfo.getJSONArray(Constants.STEPS_KEY);
+            // Create array of Steps objects that stores data from the JSON string
+            steps = new Step[stepsArray.length()];
+
+            // Iterate through steps and get data
+            for (int k = 0; k < stepsArray.length(); k++) {
+                // Initialize each object before it can be used
+                steps[k] = new Step();
+
+                // Object contains all tags we're looking for
+                JSONObject stepInfo = stepsArray.getJSONObject(k);
+
+                // Store data in step object
+                steps[k].setStepId(stepInfo.getInt(Constants.ID_KEY));
+                steps[k].setStepShortDescription(stepInfo.getString(Constants.STEPS_SHORT_DESCRIPTION_KEY));
+                steps[k].setStepDescription(stepInfo.getString(Constants.STEPS_LONG_DESCRIPTION_KEY));
+            }
+
             recipes[i].setIngredients(Arrays.asList(ingredients));
+            recipes[i].setSteps(Arrays.asList(steps));
         }
         return recipes;
     }
