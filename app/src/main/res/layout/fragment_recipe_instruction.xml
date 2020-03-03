@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--fragment showing recipe steps-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.0">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="250dp"
+        android:fitsSystemWindows="false">
+        <!--android:fitsSystemWindows=“true”  sets the padding of the View to ensure the contents don’t overlay the system windows.-->
+        <!--System windows are the parts of the screen where the system is drawing either non-interactive (in the case of the status bar)-->
+        <!--or interactive (in the case of the navigation bar) content.-->
+        <!--Most of the time, your app won’t need to draw under the status bar or the navigation bar, but if you do: you need to make sure interactive elements (like buttons) -->
+        <!--aren’t hidden underneath them.-->
+
+        <!--video-->
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/stepVideoPlayerView"
+            android:layout_width="0dp"
+            android:layout_height="240dp"
+            app:layout_constraintBottom_toTopOf="@+id/stepsDescriptionTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </com.google.android.exoplayer2.ui.PlayerView>
+
+        <!--long step description-->
+        <TextView
+            android:id="@+id/stepsDescriptionTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textSize="20sp"
+            tools:text="Steps - this is the loooooooooooooooooooong description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stepVideoPlayerView" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="16dp"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stepsDescriptionTextView"
+            app:layout_constraintVertical_bias="1.0">
+
+            <!--button Previous-->
+            <Button
+                android:id="@+id/previousButton"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:height="48sp"
+                android:text="@string/previous_button"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <!--button Next-->
+            <Button
+                android:id="@+id/nextButton"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="16dp"
+                android:height="48sp"
+                android:text="@string/next_button"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

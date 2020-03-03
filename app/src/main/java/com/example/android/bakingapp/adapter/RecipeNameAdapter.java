@@ -1,7 +1,6 @@
 package com.example.android.bakingapp.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +13,7 @@ import com.example.android.bakingapp.model.Recipe;
 
 public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.ViewHolder> {
 
-    private static Recipe[] recipes;
+    private Recipe[] recipes;
     private Context context;
     RecipeListFragment.OnRecipeSelectedListener listener;
 
@@ -38,9 +37,8 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Vi
     }
 
     // Inflate the cell layout from xml when needed (invoked by Layout Manager)
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         ConstraintLayout view = (ConstraintLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recipe_name_list_item, parent, false);
@@ -50,7 +48,7 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Vi
 
     // Bind the data to the view in each item (invoked by Layout Manager)
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         // Get element from the dataset at this position
         // Replace the contents of the view with that element
         String recipeName = recipes[position].getRecipeName();

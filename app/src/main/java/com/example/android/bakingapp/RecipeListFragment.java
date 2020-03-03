@@ -145,6 +145,12 @@ public class RecipeListFragment extends Fragment {
                 steps[k].setStepId(stepInfo.getInt(Constants.ID_KEY));
                 steps[k].setStepShortDescription(stepInfo.getString(Constants.STEPS_SHORT_DESCRIPTION_KEY));
                 steps[k].setStepDescription(stepInfo.getString(Constants.STEPS_LONG_DESCRIPTION_KEY));
+
+                if (stepInfo.getString(Constants.STEPS_VIDEO_URL_KEY).equals("")) {
+                    steps[k].setStepVideoUrl(null);
+                } else {
+                    steps[k].setStepVideoUrl(stepInfo.getString(Constants.STEPS_VIDEO_URL_KEY));
+                }
             }
 
             recipes[i].setIngredients(Arrays.asList(ingredients));

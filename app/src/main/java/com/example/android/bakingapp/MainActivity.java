@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.bakingapp.model.Recipe;
+import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.utils.Constants;
 
-public class MainActivity extends AppCompatActivity implements RecipeListFragment.OnRecipeSelectedListener {
+public class MainActivity extends AppCompatActivity implements RecipeListFragment.OnRecipeSelectedListener, RecipeDetailFragment.OnStepSelectedListener {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,13 +31,34 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
     //  Implement abstract method onRecipeSelected() of interface OnRecipeSelectedListener
     @Override
     public void onRecipeSelected(Recipe recipe) {
-        // Pass an object that implements Parcelable from an activity to a fragment
+        // Pass an object that implements Parcelable btw. fragments
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.RECIPE_KEY, recipe);
         RecipeDetailFragment fragment = new RecipeDetailFragment();
         // Parse the object to the fragment as a bundle;
         fragment.setArguments(bundle);
 
+        // Commit the fragment
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    //  Implement abstract method onStepSelected() of interface OnStepSelectedListener
+    @Override
+    public void onStepSelected(Step step) {
+        // Pass an object that implements Parcelable btw. fragments
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.STEPS_KEY, step);
+        RecipeInstructionFragment fragment = new RecipeInstructionFragment();
+        // Parse the object to the fragment as a bundle;
+        fragment.setArguments(bundle);
+
+        //Listen for changes in the back stack (className::methodName - double colon operator)
+        getSupportFragmentManager()
+                .addOnBackStackChangedListener(this::onBackStackChanged);
         // Commit the fragment
         getSupportFragmentManager()
                 .beginTransaction()

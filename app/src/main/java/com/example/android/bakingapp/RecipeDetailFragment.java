@@ -1,5 +1,6 @@
 package com.example.android.bakingapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.example.android.bakingapp.adapter.IngredientAdapter;
 import com.example.android.bakingapp.adapter.StepAdapter;
 import com.example.android.bakingapp.model.Recipe;
+import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.utils.Constants;
 
 
@@ -31,6 +33,27 @@ public class RecipeDetailFragment extends Fragment {
     private RecyclerView mStepsRecyclerView;
     private Adapter mStepsAdapter;
     private LayoutManager mStepsLayoutManager;
+
+    // Define a new interface OnStepSelectedListener that triggers a callback in the host activity (MainActivity)
+     RecipeDetailFragment.OnStepSelectedListener mCallback;
+
+    // OnStepelectedListener interface, calls a method in the host activity named onStepSelected
+    public interface OnStepSelectedListener {
+        void onStepSelected(Step step);
+    }
+
+    // Override onAttach to make sure that the container activity has implemented the callback
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // This makes sure that the host activity has implemented the callback interface
+        // If not, it throws an exception
+        try {
+            mCallback = (OnStepSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnStepSelectedListener");
+        }
+    }
 
     // Mandatory empty constructor for the fragment manager to instantiate the fragment
     public RecipeDetailFragment() { }
@@ -89,7 +112,7 @@ public class RecipeDetailFragment extends Fragment {
         mStepsRecyclerView.setLayoutManager(mStepsLayoutManager);
 
         //specify adapter
-        mStepsAdapter = new StepAdapter(recipe.getSteps(), getContext());
+        mStepsAdapter = new StepAdapter(recipe.getSteps(), getContext(), mCallback);
         mStepsRecyclerView.setAdapter(mStepsAdapter);
         mStepsRecyclerView.setNestedScrollingEnabled(false);
 

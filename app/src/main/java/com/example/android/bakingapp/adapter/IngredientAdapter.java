@@ -1,8 +1,6 @@
 package com.example.android.bakingapp.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,9 +40,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     }
 
     // Inflate the cell layout from xml when needed (invoked by Layout Manager)
-    @NonNull
     @Override
-    public IngredientAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public IngredientAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.ingredient_list_item, parent, false);
@@ -54,7 +51,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
     // Bind the data to the view in each item (invoked by Layout Manager)
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         // Get element from the dataset at this position
         double quantity = ingredients.get(position).getIngredientsQuantity();
         String measureType = ingredients.get(position).getIngredientsMeasure();

@@ -99,7 +99,7 @@
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
 
-        <!--RecyclerView for steps-->
+        <!--RecyclerView for short step descriptions-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/stepsRecyclerView"
             android:layout_width="match_parent"
