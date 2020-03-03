@@ -18,6 +18,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHolder> {
     private Context context;
     private List<Step> steps;
 
+    // Define a new interface OnStepSelectedListener
     RecipeDetailFragment.OnStepSelectedListener listener;
 
     // Pass data into the constructor
@@ -60,7 +61,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHolder> {
 
         holder.itemView.setOnClickListener(v -> {
             if(listener != null) {
-                listener.onStepSelected(steps.get(position));
+                listener.onStepSelected (steps, position);
             }
         });
     }

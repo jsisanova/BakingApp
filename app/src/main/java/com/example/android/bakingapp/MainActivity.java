@@ -1,11 +1,15 @@
 package com.example.android.bakingapp;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.utils.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements RecipeListFragment.OnRecipeSelectedListener, RecipeDetailFragment.OnStepSelectedListener {
 
@@ -24,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
                 .commit();
 
         getSupportFragmentManager()
-                //Listen for changes in the back stack (className::methodName - double colon operator)
+                // Listen for changes in the back stack (className::methodName - double colon operator)
                 .addOnBackStackChangedListener(this::onBackStackChanged);
     }
 
@@ -48,29 +52,36 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
 
     //  Implement abstract method onStepSelected() of interface OnStepSelectedListener
     @Override
-    public void onStepSelected(Step step) {
+    public void onStepSelected(List<Step> steps, int position) {
         // Pass an object that implements Parcelable btw. fragments
         Bundle bundle = new Bundle();
-        bundle.putParcelable(Constants.STEPS_KEY, step);
+        // Make ArrayList from List to avoid ClassCastException
+        ArrayList<Step> stepsArrayList = new ArrayList<>(steps);
+        bundle.putParcelableArrayList(Constants.STEPS_KEY, stepsArrayList);
+        bundle.putParcelable(Constants.STEP_KEY, steps.get(position));
+
         RecipeInstructionFragment fragment = new RecipeInstructionFragment();
         // Parse the object to the fragment as a bundle;
         fragment.setArguments(bundle);
 
-        //Listen for changes in the back stack (className::methodName - double colon operator)
-        getSupportFragmentManager()
-                .addOnBackStackChangedListener(this::onBackStackChanged);
+        // Source: https://medium.com/@bherbst/managing-the-fragment-back-stack-373e87e4ff62
+        // Clean back stack - when back button & up button is presed after going through detail steps (subscreen), I return to RecipeDetailFragment and not to previous step
+        // Pop off everything up to and including the current tab
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager
+                .popBackStack("BACK_STACK_ROOT_TAG", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         // Commit the fragment
-        getSupportFragmentManager()
+        fragmentManager
                 .beginTransaction()
                 .replace(R.id.frame_container, fragment)
-                .addToBackStack(null)
+                .addToBackStack("BACK_STACK_ROOT_TAG")
                 .commit();
     }
 
 
     /**
      * Source: https://stackoverflow.com/questions/13086840/actionbar-up-navigation-with-fragments
-     * In RecipeDetailFragment, when I press actionbar 'up button', I return to the main layout
+     * From RecipeDetailFragment, when I press actionbar 'up button', I return to the main layout
      */
     public void onBackStackChanged() {
         shouldDisplayHomeUp();

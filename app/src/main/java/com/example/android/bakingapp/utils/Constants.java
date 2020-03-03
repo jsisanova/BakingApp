@@ -27,4 +27,5 @@ public class Constants {
 
     // Parcelable keys
     public final static String RECIPE_KEY = "recipe";
+    public final static String STEP_KEY = "step";
 }

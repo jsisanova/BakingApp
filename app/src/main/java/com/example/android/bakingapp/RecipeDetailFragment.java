@@ -21,6 +21,8 @@ import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.utils.Constants;
 
+import java.util.List;
+
 
 public class RecipeDetailFragment extends Fragment {
 
@@ -39,7 +41,7 @@ public class RecipeDetailFragment extends Fragment {
 
     // OnStepelectedListener interface, calls a method in the host activity named onStepSelected
     public interface OnStepSelectedListener {
-        void onStepSelected(Step step);
+        void onStepSelected(List<Step> steps, int position);
     }
 
     // Override onAttach to make sure that the container activity has implemented the callback
