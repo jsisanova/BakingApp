@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -28,11 +29,14 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Vi
     // Provide a reference to the item views in viewholder
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView recipeNameTV;
+        View divider;
 
         public ViewHolder(ConstraintLayout itemView) {
             super(itemView);
 
             recipeNameTV = itemView.findViewById(R.id.recipeName);
+            // needed to set visibility to GONE by last item
+            divider = itemView.findViewById(R.id.recipeDivider);
         }
     }
 
@@ -59,6 +63,11 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Vi
                 listener.onRecipeSelected(recipes[position]);
             }
         });
+
+        // Set visibility of divider to GONE by last item
+        if (position == recipes.length - 1) {
+            holder.divider.setVisibility(View.GONE);
+        }
     }
 
     // Total number of items

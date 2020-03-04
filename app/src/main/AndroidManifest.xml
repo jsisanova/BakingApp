@@ -13,7 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <!--Add the launch mode "single top" to the MainActivity - when you open MainActivity,-->
+        <!--it will take you back to the already opened activity, not generate a new one-->
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
