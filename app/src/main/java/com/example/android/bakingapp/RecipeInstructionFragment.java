@@ -1,6 +1,8 @@
 package com.example.android.bakingapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -42,7 +44,6 @@ public class RecipeInstructionFragment extends Fragment {
     private boolean playWhenReady = true;
     private int currentWindow = 0;
     private long playbackPosition = 0;
-    private int position;
 
     // Define a new interface OnStepSelectedListener that triggers a callback in the host activity
     RecipeDetailFragment.OnStepSelectedListener mCallback;
@@ -104,12 +105,6 @@ public class RecipeInstructionFragment extends Fragment {
             }
         });
 
-        if(savedInstanceState != null) {
-            playWhenReady = savedInstanceState.getBoolean("playWhenReady");
-            currentWindow = savedInstanceState.getInt("currentWindow");
-            playbackPosition = savedInstanceState.getLong("playBackPosition");
-        }
-
         // Return rootview
         return rootview;
     }
@@ -157,10 +152,31 @@ public class RecipeInstructionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        // check landscape orientation & hideSystemUi - is a helper method called in onResume which allows us to have a full screen experience
+        releasePlayer();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && player != null) {
+            hideSystemUi();
+        }
+
         if ((Util.SDK_INT <= 23 || player == null)) {
             initializePlayer(step.getStepVideoUrl());
         }
         player.setPlayWhenReady(true);
+
+
+    }
+
+    // hideSystemUi is a helper method called in onResume which allows us to have a full screen experience
+    @SuppressLint("InlinedApi")
+    private void hideSystemUi() {
+
+            playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
     // Before API Level 24 there is no guarantee of onStop being called. So we have to release the player as early as possible in onPause.
