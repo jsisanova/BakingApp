@@ -64,9 +64,12 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Vi
             }
         });
 
-        // Set visibility of divider to GONE by last item
-        if (position == recipes.length - 1) {
-            holder.divider.setVisibility(View.GONE);
+        // Set visibility of divider to GONE by last item (if not tablet)
+        boolean isTablet = context.getResources().getBoolean(R.bool.isTablet);
+        if (!isTablet) {
+            if (position == recipes.length - 1) {
+                holder.divider.setVisibility(View.GONE);
+            }
         }
     }
 

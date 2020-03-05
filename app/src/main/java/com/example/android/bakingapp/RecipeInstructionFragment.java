@@ -167,18 +167,6 @@ public class RecipeInstructionFragment extends Fragment {
 
     }
 
-    // hideSystemUi is a helper method called in onResume which allows us to have a full screen experience
-    @SuppressLint("InlinedApi")
-    private void hideSystemUi() {
-
-            playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-    }
-
     // Before API Level 24 there is no guarantee of onStop being called. So we have to release the player as early as possible in onPause.
     // Starting with API Level 24 (which brought multi and split window mode) onStop is guaranteed to be called.
     // In the paused state our activity is still visible so we wait to release the player until onStop.
@@ -260,5 +248,18 @@ public class RecipeInstructionFragment extends Fragment {
             player.release();
             player = null;
         }
+    }
+
+    // hideSystemUi is a helper method called in onResume which allows us to have a full screen experience
+    // Source: https://codelabs.developers.google.com/codelabs/exoplayer-intro/#0
+    @SuppressLint("InlinedApi")
+    private void hideSystemUi() {
+
+        playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 }

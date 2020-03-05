@@ -1,15 +1,20 @@
 package com.example.android.bakingapp;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.LayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,8 +84,17 @@ public class RecipeListFragment extends Fragment {
 
         // Get a reference to the RecyclerView in the fragment_recipe_list.xml layout file
         mRecipeRecyclerView = rootview.findViewById(R.id.recipeNameRecyclerView);
-        mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        mRecipeRecyclerView.setLayoutManager(mLayoutManager);
+
+
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+        if (isTablet) {
+            mLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 2);
+            mRecipeRecyclerView.setLayoutManager(mLayoutManager);
+        } else {
+            mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+            mRecipeRecyclerView.setLayoutManager(mLayoutManager);
+        }
+
 
         new FetchRecipeDataAsyncTask().execute();
 
