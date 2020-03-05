@@ -3,6 +3,7 @@ package com.example.android.bakingapp;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,6 +39,9 @@ public class RecipeListFragment extends Fragment {
 
     private Ingredient[] ingredients;
     private Step[] steps;
+
+    // To handle rotation
+    private Bundle mBundleRecyclerViewState;
 
     // Define a new interface OnRecipeSelectedListener that triggers a callback in the host activity (MainActivity)
     OnRecipeSelectedListener mCallback;
@@ -191,6 +195,30 @@ public class RecipeListFragment extends Fragment {
             // Create the adapter and Set the adapter on the RecyclerView
             mRecipeAdapter = new RecipeNameAdapter(recipes, getContext(), mCallback);
             mRecipeRecyclerView.setAdapter(mRecipeAdapter);
+        }
+    }
+
+
+    // Source (2nd solution): https://stackoverflow.com/questions/28236390/recyclerview-store-restore-state-between-activities
+    // Save state of RecyclerView during rotation
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // save RecyclerView state
+        mBundleRecyclerViewState = new Bundle();
+        Parcelable listState = mRecipeRecyclerView.getLayoutManager().onSaveInstanceState();
+        mBundleRecyclerViewState.putParcelable(Constants.RECIPE_LIST_STATE_KEY, listState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // restore RecyclerView state
+        if (mBundleRecyclerViewState != null) {
+            Parcelable listState = mBundleRecyclerViewState.getParcelable(Constants.RECIPE_LIST_STATE_KEY);
+            mRecipeRecyclerView.getLayoutManager().onRestoreInstanceState(listState);
         }
     }
 }

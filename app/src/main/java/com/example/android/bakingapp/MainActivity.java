@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.model.Step;
@@ -24,28 +23,31 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Check if online
-        if (isOnline ()) {
-            RecipeListFragment listFragment = new RecipeListFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.frame_container, listFragment)
-                    .commit();
+        if (savedInstanceState == null) {
+            // Check if online
+            if (isOnline()) {
+                RecipeListFragment listFragment = new RecipeListFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frame_container, listFragment)
+                        .commit();
 
-            getSupportFragmentManager()
-                    // Listen for changes in the back stack (className::methodName - double colon operator)
-                    .addOnBackStackChangedListener(this::onBackStackChanged);
-        } else {
-            isNoConnection();
+                getSupportFragmentManager()
+                        // Listen for changes in the back stack (className::methodName - double colon operator)
+                        .addOnBackStackChangedListener(this::onBackStackChanged);
+            } else {
+                isNoConnection();
+            }
         }
     }
+
 
     //  Implement abstract method onRecipeSelected() of interface OnRecipeSelectedListener
     @Override
     public void onRecipeSelected(Recipe recipe) {
 
         // Check if online
-        if (isOnline ()) {
+        if (isOnline()) {
             // Pass an object that implements Parcelable btw. fragments
             Bundle bundle = new Bundle();
             bundle.putParcelable(Constants.RECIPE_KEY, recipe);
