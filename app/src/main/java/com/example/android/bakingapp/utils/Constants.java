@@ -33,4 +33,9 @@ public class Constants {
     public final static String RECIPE_LIST_STATE_KEY = "RECIPE_LIST_STATE_KEY";
     public final static String DETAIL_LIST_STATE_KEY = "DETAIL_LIST_STATE_KEY";
     public final static String DETAIL_LIST_STATE_KEY2 = "DETAIL_LIST_STATE_KEY2";
+    public final static String CURRENT_STEP_KEY = "CURRENT_STEP_KEY";
+    public final static String KEY_PLAY_WHEN_READY = "KEY_PLAY_WHEN_READY";
+    public final static String CURRENT_STEP_ARRAYLIST = "CURRENT_STEP_ARRAYLIST";
+    public final static String KEY_WINDOW = "KEY_WINDOW";
+    public final static String KEY_POSITION = "KEY_POSITION";
 }

@@ -3,6 +3,7 @@ package com.example.android.bakingapp;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -74,7 +75,38 @@ public class RecipeInstructionFragment extends Fragment {
         if(((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(step.getStepShortDescription());
         }
+
+
+//        if (savedInstanceState != null) {
+//            step = savedInstanceState.getParcelable(Constants.CURRENT_STEP_KEY);
+//            steps = savedInstanceState.getParcelableArrayList(Constants.CURRENT_STEP_ARRAYLIST);
+//            playWhenReady = savedInstanceState.getBoolean(Constants.KEY_PLAY_WHEN_READY);
+//            currentWindow = savedInstanceState.getInt(Constants.KEY_WINDOW);
+//            playbackPosition = savedInstanceState.getLong(Constants.KEY_POSITION);
+//        } else {
+//            // Get the object in onCreate();
+//            steps = getArguments().getParcelableArrayList(Constants.STEPS_KEY);
+//            step = getArguments().getParcelable(Constants.STEP_KEY);
+//            playWhenReady = true;
+//            currentWindow = 0;
+//            playbackPosition = 0;
+//        }
     }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState (outState);
+//
+//        outState.putParcelable(Constants.CURRENT_STEP_KEY, step);
+//        outState.putParcelableArrayList(Constants.CURRENT_STEP_ARRAYLIST, steps);
+//
+//        playWhenReady = player.getPlayWhenReady();
+//        currentWindow = player.getCurrentWindowIndex();
+//        playbackPosition = player.getCurrentPosition();
+//        outState.putBoolean(Constants.KEY_PLAY_WHEN_READY, playWhenReady);
+//        outState.putInt(Constants.KEY_WINDOW, currentWindow);
+//        outState.putLong(Constants.KEY_POSITION, playbackPosition);
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
