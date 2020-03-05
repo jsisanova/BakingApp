@@ -137,8 +137,7 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
-
-        state.putBoolean("IS_SHOWING_DIALOG", isShowingDialog);
+        state.putBoolean(Constants.IS_SHOWING_DIALOG_KEY, isShowingDialog);
     }
 
     @Override
@@ -146,7 +145,7 @@ public class RecipeDetailFragment extends Fragment {
         super.onViewStateRestored(savedInstanceState);
         // Restore UI state from the savedInstanceState.
         if (savedInstanceState != null) {
-            isShowingDialog = savedInstanceState.getBoolean("IS_SHOWING_DIALOG", false);
+            isShowingDialog = savedInstanceState.getBoolean(Constants.IS_SHOWING_DIALOG_KEY, false);
             if(isShowingDialog){
                 mIngredientsRecyclerView.setVisibility(View.VISIBLE);
             }
