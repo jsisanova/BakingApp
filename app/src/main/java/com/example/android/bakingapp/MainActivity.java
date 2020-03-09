@@ -31,10 +31,6 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
                         .beginTransaction()
                         .replace(R.id.frame_container, listFragment)
                         .commit();
-
-                getSupportFragmentManager()
-                        // Listen for changes in the back stack (className::methodName - double colon operator)
-                        .addOnBackStackChangedListener(this::onBackStackChanged);
             } else {
                 isNoConnection();
             }
@@ -54,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
             RecipeDetailFragment fragment = new RecipeDetailFragment();
             // Parse the object to the fragment as a bundle;
             fragment.setArguments(bundle);
+
+            getSupportFragmentManager()
+                    // Listen for changes in the back stack (className::methodName - double colon operator)
+                    .addOnBackStackChangedListener(this::onBackStackChanged);
 
             // Commit the fragment
             getSupportFragmentManager()
