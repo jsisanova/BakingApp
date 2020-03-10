@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.utils.Constants;
@@ -27,14 +28,17 @@ import com.google.android.exoplayer2.util.Util;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecipeInstructionFragment extends Fragment {
 
     private ArrayList<Step> steps;
     private Step step;
 
-    private TextView stepDescriptionTV;
-    private Button previousButton;
-    private Button nextButton;
+    @BindView(R.id.previousButton) Button previousButton;
+    @BindView(R.id.nextButton) Button nextButton;
+    @BindView(R.id.stepsDescriptionTextView) TextView stepDescriptionTV;
 
     // Source: https://codelabs.developers.google.com/codelabs/exoplayer-intro/#0
     // variables for ExoPlayer
@@ -82,16 +86,17 @@ public class RecipeInstructionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate view
         View rootview = inflater.inflate(R.layout.fragment_recipe_instruction, container, false);
+        ButterKnife.bind(this, rootview);
 
         // Instantiate the Listener
         playbackStateListener = new PlaybackStateListener();
         playerView = rootview.findViewById(R.id.stepVideoPlayerView);
 
-        setupButtonsAndViews(rootview, step);
+        setupButtonsAndViews(step);
 
         previousButton.setOnClickListener(v -> {
             if (step.getStepId() == 0) {
-                setupButtonsAndViews(rootview, step);
+                setupButtonsAndViews(step);
             } else {
                 mCallback.onStepSelected(steps, (step.getStepId()) - 1);
             }
@@ -99,7 +104,7 @@ public class RecipeInstructionFragment extends Fragment {
 
         nextButton.setOnClickListener(v -> {
             if (step.getStepId() == (steps.size() - 1)) {
-                setupButtonsAndViews(rootview, step);
+                setupButtonsAndViews(step);
             } else {
                 mCallback.onStepSelected(steps, (step.getStepId()) + 1);
             }
@@ -110,10 +115,7 @@ public class RecipeInstructionFragment extends Fragment {
     }
 
     // basic setup of buttons and views
-    public void setupButtonsAndViews(View view, Step step) {
-        stepDescriptionTV = view.findViewById(R.id.stepsDescriptionTextView);
-        previousButton = view.findViewById (R.id.previousButton);
-        nextButton = view.findViewById (R.id.nextButton);
+    public void setupButtonsAndViews(Step step) {
 
         stepDescriptionTV.setText(step.getStepDescription());
 

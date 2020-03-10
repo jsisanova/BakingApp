@@ -13,6 +13,9 @@ import com.example.android.bakingapp.model.Step;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHolder> {
 
     private Context context;
@@ -32,12 +35,13 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHolder> {
     // Store and recycle views as they are scrolled off screen
     // Provide a reference to the item views in viewholder
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView stepShortDescriptionTV;
+
+        @BindView(R.id.stepsShortDescriptionTextView) TextView stepShortDescriptionTV;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            stepShortDescriptionTV = itemView.findViewById(R.id.stepsShortDescriptionTextView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

@@ -12,6 +12,9 @@ import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.RecipeListFragment;
 import com.example.android.bakingapp.model.Recipe;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.ViewHolder> {
 
     private Recipe[] recipes;
@@ -28,15 +31,15 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Vi
     // Store and recycle views as they are scrolled off screen
     // Provide a reference to the item views in viewholder
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView recipeNameTV;
-        View divider;
+
+        @BindView(R.id.recipeName) TextView recipeNameTV;
+            // needed to set visibility to GONE by last item
+        @BindView(R.id.recipeDivider) View divider;
 
         public ViewHolder(ConstraintLayout itemView) {
             super(itemView);
 
-            recipeNameTV = itemView.findViewById(R.id.recipeName);
-            // needed to set visibility to GONE by last item
-            divider = itemView.findViewById(R.id.recipeDivider);
+            ButterKnife.bind(this, itemView);
         }
     }
 

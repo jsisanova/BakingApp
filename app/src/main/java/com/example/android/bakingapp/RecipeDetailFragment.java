@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.adapter.IngredientAdapter;
@@ -25,6 +24,9 @@ import com.example.android.bakingapp.utils.Constants;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class RecipeDetailFragment extends Fragment {
 
@@ -32,11 +34,15 @@ public class RecipeDetailFragment extends Fragment {
     // To see ingredients after rotation when opened
     Boolean isShowingDialog = false;
 
-    private RecyclerView mIngredientsRecyclerView;
+    @BindView(R.id.recipeTitle) TextView recipeTitleTV;
+    @BindView(R.id.servings) TextView recipeServingsTV;
+    @BindView(R.id.ingredientsCardView) CardView ingredientsCV;
+
+    @BindView(R.id.ingredientsRecyclerView) RecyclerView mIngredientsRecyclerView;
     private Adapter mIngredientsAdapter;
     private LayoutManager mIngredientsLayoutManager;
 
-    private RecyclerView mStepsRecyclerView;
+    @BindView(R.id.stepsRecyclerView) RecyclerView mStepsRecyclerView;
     private Adapter mStepsAdapter;
     private LayoutManager mStepsLayoutManager;
 
@@ -81,21 +87,17 @@ public class RecipeDetailFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootview = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
         // Inflate the view
+        View rootview = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
+        ButterKnife.bind(this, rootview);
 
-        TextView recipeTitleTV = rootview.findViewById(R.id.recipeTitle);
-        TextView recipeServingsTV = rootview.findViewById(R.id.servings);
-        CardView ingredientsCV = rootview.findViewById(R.id.ingredientsCardView);
 
         recipeTitleTV.setText(recipe.getRecipeName());
         recipeServingsTV.setText(Integer.toString(recipe.getServings()));
 
         // Set up ingredients RecyclerView
-        mIngredientsRecyclerView = rootview.findViewById(R.id.ingredientsRecyclerView);
         mIngredientsLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mIngredientsRecyclerView.setLayoutManager(mIngredientsLayoutManager);
         // for smooth scrolling
@@ -118,7 +120,6 @@ public class RecipeDetailFragment extends Fragment {
 
 
         // Set up steps RecyclerView
-        mStepsRecyclerView = rootview.findViewById(R.id.stepsRecyclerView);
         mStepsLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mStepsRecyclerView.setLayoutManager(mStepsLayoutManager);
 

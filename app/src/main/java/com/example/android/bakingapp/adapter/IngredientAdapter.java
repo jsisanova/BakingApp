@@ -12,6 +12,9 @@ import com.example.android.bakingapp.model.Ingredient;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
 
     private Context context;
@@ -26,16 +29,15 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     // Store and recycle views as they are scrolled off screen
     // Provide a reference to the item views in viewholder
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView ingredientQuantityTV;
-        private TextView ingredientNameTV;
-        private TextView ingredientMeasureTV;
+
+        @BindView(R.id.ingredientQuantityTextView) TextView ingredientQuantityTV;
+        @BindView (R.id.ingredientNameTextView) TextView ingredientNameTV;
+        @BindView (R.id.ingredientMeasureTextView) TextView ingredientMeasureTV;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            ingredientQuantityTV = itemView.findViewById(R.id.ingredientQuantityTextView);
-            ingredientNameTV = itemView.findViewById(R.id.ingredientNameTextView);
-            ingredientMeasureTV = itemView.findViewById(R.id.ingredientMeasureTextView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

@@ -16,25 +16,44 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements RecipeListFragment.OnRecipeSelectedListener, RecipeDetailFragment.OnStepSelectedListener {
+
+    private boolean isTwoPane;
+    // Bcs of SnackBar; cannot be local variable
+    @BindView(R.id.coordinator_layout) View coordinator_layout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ButterKnife.bind(this);
+
+        if (findViewById(R.id.detail_container) != null) {
+            isTwoPane = true;
+        } else {
+            isTwoPane = false;
+        }
+
         if (savedInstanceState == null) {
             // Check if online
             if (isOnline()) {
+
                 RecipeListFragment listFragment = new RecipeListFragment();
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.frame_container, listFragment)
+                        .replace(R.id.container, listFragment, "MY_FRAGMENT")
                         .commit();
             } else {
                 isNoConnection();
             }
         }
+        // Necessary to see up button also after rotation
+        shouldDisplayHomeUp();
     }
 
 
@@ -55,12 +74,31 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
                     // Listen for changes in the back stack (className::methodName - double colon operator)
                     .addOnBackStackChangedListener(this::onBackStackChanged);
 
+
+//            if (isTwoPane) {
+//                FragmentManager fm = getSupportFragmentManager();
+//                RecipeListFragment myListFragment = (RecipeListFragment) fm.findFragmentByTag("MY FRAGMENT");
+//                if (myListFragment != null && myListFragment.isVisible()) {
+//                    fm.beginTransaction()
+//                            .hide(myListFragment)
+//                            .commit();
+//                }
+//            }
+
+
+
+
+
+
+
             // Commit the fragment
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.frame_container, fragment)
+                    .replace(R.id.container, fragment)
                     .addToBackStack(null)
                     .commit();
+
+
         } else {
             isNoConnection();
         }
@@ -89,15 +127,27 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager
                     .popBackStack("BACK_STACK_ROOT_TAG", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            // Commit the fragment
-            fragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_container, fragment)
-                    .addToBackStack("BACK_STACK_ROOT_TAG")
-                    .commit();
-        } else {
-            isNoConnection();
-        }
+
+            //Load Detail Fragment by default in the details pane
+//            if (isTwoPane) {
+//                fragmentManager
+//                        .beginTransaction()
+//                        .replace(R.id.detail_container, fragment)
+//                        .addToBackStack("BACK_STACK_ROOT_TAG")
+//                        .commit();
+//            } else if (isTwoPane == false) {
+
+                // Commit the fragment
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .addToBackStack("BACK_STACK_ROOT_TAG")
+                        .commit();
+
+            } else {
+                isNoConnection();
+            }
+//        }
     }
 
 
@@ -121,9 +171,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
 
     // Snackbar when no internet connection
     public void isNoConnection() {
-        View coordinator_layout;
 
-        coordinator_layout = findViewById(R.id.coordinator_layout);
         Snackbar snackbar = Snackbar
                 .make(coordinator_layout, R.string.snackbar_currently_no_connection, Snackbar.LENGTH_INDEFINITE)
                 .setAction("RETRY", view -> {
@@ -148,11 +196,13 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
     public void onBackStackChanged() {
         shouldDisplayHomeUp();
     }
+
     public void shouldDisplayHomeUp(){
         //Enable Up button only  if there are entries in the back stack
         boolean canGoback = getSupportFragmentManager().getBackStackEntryCount()>0;
         getSupportActionBar().setDisplayHomeAsUpEnabled(canGoback);
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         //This method is called when the up button is pressed. Just the pop back stack.

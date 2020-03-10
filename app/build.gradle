@@ -39,4 +39,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.9.3'
     // Use Snackbar
     implementation 'com.android.support:design:28.0.0'
+    // Use ButterKnife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
