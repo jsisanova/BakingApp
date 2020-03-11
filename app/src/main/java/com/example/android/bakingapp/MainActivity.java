@@ -16,14 +16,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindBool;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements RecipeListFragment.OnRecipeSelectedListener, RecipeDetailFragment.OnStepSelectedListener {
 
-    private boolean isTwoPane;
     // Bcs of SnackBar; cannot be local variable
     @BindView(R.id.coordinator_layout) View coordinator_layout;
+    // To check if it is tablet
+    @BindBool(R.bool.isTablet)  boolean isTwoPane;
 
 
     @Override
@@ -33,12 +35,6 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
 
         ButterKnife.bind(this);
 
-        if (findViewById(R.id.detail_container) != null) {
-            isTwoPane = true;
-        } else {
-            isTwoPane = false;
-        }
-
         if (savedInstanceState == null) {
             // Check if online
             if (isOnline()) {
@@ -46,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
                 RecipeListFragment listFragment = new RecipeListFragment();
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.container, listFragment, "MY_FRAGMENT")
+                        .replace(R.id.container, listFragment)
                         .commit();
             } else {
                 isNoConnection();
@@ -74,31 +70,12 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
                     // Listen for changes in the back stack (className::methodName - double colon operator)
                     .addOnBackStackChangedListener(this::onBackStackChanged);
 
-
-//            if (isTwoPane) {
-//                FragmentManager fm = getSupportFragmentManager();
-//                RecipeListFragment myListFragment = (RecipeListFragment) fm.findFragmentByTag("MY FRAGMENT");
-//                if (myListFragment != null && myListFragment.isVisible()) {
-//                    fm.beginTransaction()
-//                            .hide(myListFragment)
-//                            .commit();
-//                }
-//            }
-
-
-
-
-
-
-
             // Commit the fragment
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.container, fragment)
                     .addToBackStack(null)
                     .commit();
-
-
         } else {
             isNoConnection();
         }
@@ -117,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
             bundle.putParcelableArrayList(Constants.STEPS_KEY, stepsArrayList);
             bundle.putParcelable(Constants.STEP_KEY, steps.get(position));
 
+
             RecipeInstructionFragment fragment = new RecipeInstructionFragment();
             // Parse the object to the fragment as a bundle;
             fragment.setArguments(bundle);
@@ -128,26 +106,24 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
             fragmentManager
                     .popBackStack("BACK_STACK_ROOT_TAG", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-            //Load Detail Fragment by default in the details pane
-//            if (isTwoPane) {
-//                fragmentManager
-//                        .beginTransaction()
-//                        .replace(R.id.detail_container, fragment)
-//                        .addToBackStack("BACK_STACK_ROOT_TAG")
-//                        .commit();
-//            } else if (isTwoPane == false) {
-
+            if (isTwoPane) {
+                // Commit the fragment
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.recipe_detail_container, fragment)
+                        .addToBackStack("BACK_STACK_ROOT_TAG")
+                        .commit();
+            } else {
                 // Commit the fragment
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.container, fragment)
                         .addToBackStack("BACK_STACK_ROOT_TAG")
                         .commit();
-
-            } else {
-                isNoConnection();
             }
-//        }
+        } else {
+            isNoConnection();
+        }
     }
 
 

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="0dp"
+    android:baselineAligned="false"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:id="@+id/recipe_list"
+        android:name="co.asterv.myapplication.RecipeListFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+        <!--recipe details-->
+        <!--ScrollView has id, then rotation works correctly-->
+        <!--android:layout_width="match_parent" v scroll aj constraint-->
+        <ScrollView
+            android:id="@+id/detailScrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.constraint.ConstraintLayout
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp">
+                <!--android:focusableInTouchMode="true"  to handle rotation, when RecyclerView is inside ScrollView-->
+
+                <TextView
+                    android:id="@+id/recipeTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    tools:text="RECIPE TITLE"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/servingsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="24sp"
+                    android:text="@string/servings_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recipeTitle" />
+
+                <TextView
+                    android:id="@+id/servings"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="24sp"
+                    tools:text="8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/servingsTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/recipeTitle" />
+
+                <!--CardView for ingredients-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/ingredientsCardView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/servingsTitle"
+                    android:nestedScrollingEnabled="true">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/ingredientsTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:paddingBottom="16dp"
+                            android:textAlignment="center"
+                            android:textSize="26sp"
+                            android:textStyle="bold"
+                            android:text="@string/ingredients_title"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!--RecycleView for ingredients quantity, measure type and name-->
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/ingredientsRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ingredientsTitle">
+                        </android.support.v7.widget.RecyclerView>
+                    </android.support.constraint.ConstraintLayout>
+                </android.support.v7.widget.CardView>
+
+                <!--RecyclerView for short step descriptions-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/stepsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ingredientsCardView" />
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/recipe_detail_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:padding="8dp" >
+    </FrameLayout>
+</LinearLayout>
+
