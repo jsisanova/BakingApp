@@ -42,4 +42,16 @@ dependencies {
     // Use ButterKnife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    // Testing-only dependencies
+    implementation 'com.android.support:support-annotations:28.0.0'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-idling-resource:3.0.2'
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:3.0.2") {
+        exclude module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+    }
 }
