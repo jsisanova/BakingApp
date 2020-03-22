@@ -1,22 +1,38 @@
 <!--describes widget views, is in layout folder-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appwidget_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="#09C"
     android:padding="@dimen/widget_margin">
 
+    <!--recipe title in widget -->
     <TextView
-        android:id="@+id/appwidget_text"
-        android:layout_width="wrap_content"
+        android:id="@+id/appwidget_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
-        android:background="#09C"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/bigger_margin_and_padding"
         android:contentDescription="@string/appwidget_text"
-        android:text="@string/appwidget_text"
-        android:textColor="#ffffff"
+        android:textColor="@color/widgetTextColor"
         android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold|italic"
+        android:textAllCaps="true"
+        tools:text="@string/appwidget_text" />
 
-</RelativeLayout>
+    <!--list of ingredients for recipe in widget-->
+    <ListView
+        android:id="@+id/appwidget_ingredientsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/bigger_margin_and_padding"
+        android:textColor="@color/widgetTextColor" />
+</LinearLayout>
+
+
+
+
+
+

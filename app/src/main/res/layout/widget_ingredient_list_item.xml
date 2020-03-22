@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/widgetListItemContainer"
+    android:orientation="horizontal">
+
+    <!--ingredient list item for widget-->
+    <TextView
+        android:id="@+id/widgetSingleIngredientTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:textSize="18sp"
+        tools:text="10 cups milk" />
+</LinearLayout>

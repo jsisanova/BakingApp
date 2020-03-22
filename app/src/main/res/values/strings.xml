@@ -10,4 +10,5 @@
 
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="add_to_widget_button">Add to Widget</string>
 </resources>

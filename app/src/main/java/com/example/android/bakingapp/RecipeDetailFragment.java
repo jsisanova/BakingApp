@@ -14,13 +14,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.bakingapp.adapter.IngredientAdapter;
 import com.example.android.bakingapp.adapter.StepAdapter;
 import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.utils.Constants;
+import com.example.android.bakingapp.widget.UpdateIngredientsService;
 
 import java.util.List;
 
@@ -36,6 +39,7 @@ public class RecipeDetailFragment extends Fragment {
 
     @BindView(R.id.recipeTitle) TextView recipeTitleTV;
     @BindView(R.id.servings) TextView recipeServingsTV;
+    @BindView(R.id.updateRecipeIngredientsWidgetButton) TextView addToWidgetButton;
     @BindView(R.id.ingredientsCardView) CardView ingredientsCV;
 
     @BindView(R.id.ingredientsRecyclerView) RecyclerView mIngredientsRecyclerView;
@@ -123,10 +127,18 @@ public class RecipeDetailFragment extends Fragment {
         mStepsLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mStepsRecyclerView.setLayoutManager(mStepsLayoutManager);
 
-        //specify adapter
+        // Specify adapter
         mStepsAdapter = new StepAdapter(recipe.getSteps(), getContext(), mCallback);
         mStepsRecyclerView.setAdapter(mStepsAdapter);
         mStepsRecyclerView.setNestedScrollingEnabled(false);
+
+
+        // Add to widget button
+        addToWidgetButton.setOnClickListener(view1 -> {
+            // Launch a service
+            UpdateIngredientsService.startActionUpdateIngredients(getContext(), recipe);
+            Toast.makeText(getActivity(), "Recipe:  " + recipe.getRecipeName() + " added to Widget.", Toast.LENGTH_SHORT).show();
+        });
 
         // Return the rootview
         return rootview;

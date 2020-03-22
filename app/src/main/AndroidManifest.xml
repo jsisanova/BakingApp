@@ -26,7 +26,7 @@
         </activity>
 
         <!-- Add a reciever tag for WidgetProvider and an intent-filter for APPWIDGET_UPDATE with meta data pointing to the widget_provider_info file -->
-        <receiver android:name=".BakingAppWidgetProvider">
+        <receiver android:name=".widget.BakingAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -35,6 +35,18 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/baking_app_widget_provider_info" />
         </receiver>
-    </application>
 
+        <!--Register service-->
+        <service
+            android:name=".widget.UpdateIngredientsService"
+            android:exported="false" />
+        <!--android:exported = Whether or not components of other applications can invoke the service or interact with it-->
+
+        <!--Register RemoteViewsService - for app widgets with collections-->
+        <service
+            android:name=".widget.IngredientsListService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+    </application>
 </manifest>

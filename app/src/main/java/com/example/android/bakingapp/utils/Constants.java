@@ -28,6 +28,8 @@ public class Constants {
     // Parcelable keys
     public final static String RECIPE_KEY = "recipe";
     public final static String STEP_KEY = "step";
+    public final static String BUNDLE_KEY = "bundle";
+    public final static String RECIPE_INGREDIENTS_KEY = "recipeIngredients";
 
     // Keys to handle rotation
     public final static String RECIPE_LIST_STATE_KEY = "RECIPE_LIST_STATE_KEY";

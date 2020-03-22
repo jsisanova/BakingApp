@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="general_margin_and_padding">8dp</dimen>
+    <dimen name="bigger_margin_and_padding">16dp</dimen>
+    <dimen name="big_margin_and_padding">16dp</dimen>
+
 
     <!--
 Refer to App Widget Documentation for margin information
