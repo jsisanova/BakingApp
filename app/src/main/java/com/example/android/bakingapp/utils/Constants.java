@@ -3,8 +3,8 @@ package com.example.android.bakingapp.utils;
 public class Constants {
 
     // UI Titles
-    public final static String DETAILS_TITLE = "Recipe Details";
     public final static String MAIN_TITLE = "Baking App";
+    public final static String DETAILS_TITLE = "Recipe Details";
 
 
     // JSON constants
@@ -22,7 +22,6 @@ public class Constants {
     public final static String STEPS_SHORT_DESCRIPTION_KEY = "shortDescription";
     public final static String STEPS_LONG_DESCRIPTION_KEY = "description";
     public final static String STEPS_VIDEO_URL_KEY = "videoURL";
-    public final static String STEPS_THUMBNAIL_URL_KEY = "thumbnailURL";
 
 
     // Parcelable keys

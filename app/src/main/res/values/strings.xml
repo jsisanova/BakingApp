@@ -1,14 +1,24 @@
 <resources>
     <string name="app_name">Baking App</string>
-    <string name="ingredients_title">Ingredients</string>
     <string name="previous_button">Previous</string>
     <string name="next_button">Next</string>
 
     <string name="snackbar_currently_no_connection">Currently there is no internet connection</string>
     <string name="snackbar_message_restored">Message is restored!</string>
-    <string name="servings_title">Servings:</string>
 
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="add_to_widget_button">Add to Widget</string>
+    <string name="widget_single_ingredient_muster_tv">10 cups milk</string>
+
+    <string name="recipe_name_muster_tv">RECIPE NAME</string>
+    <string name="bullet">\u2022</string>
+    <string name="ingredient_quantity_muster_tv">2</string>
+    <string name="ingredient_measure_muster_tv">spoons</string>
+    <string name="ingredient_name_muster_tv">sugar</string>
+    <string name="servings_title_muster_tv">Servings:</string>
+    <string name="servings_muster_tv">8</string>
+    <string name="ingredients_title">Ingredients</string>
+    <string name="steps_short_description_tv">Steps short description</string>
+    <string name="steps_description_muster_tv">Steps - this is the loooooooooooooooooooong description</string>
 </resources>

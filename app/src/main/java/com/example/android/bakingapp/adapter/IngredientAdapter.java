@@ -30,9 +30,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     // Provide a reference to the item views in viewholder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.ingredientQuantityTextView) TextView ingredientQuantityTV;
-        @BindView (R.id.ingredientNameTextView) TextView ingredientNameTV;
-        @BindView (R.id.ingredientMeasureTextView) TextView ingredientMeasureTV;
+        @BindView(R.id.ingredient_quantity_tv) TextView ingredientQuantityTV;
+        @BindView (R.id.ingredient_name_tv) TextView ingredientNameTV;
+        @BindView (R.id.ingredient_measure_tv) TextView ingredientMeasureTV;
 
         public ViewHolder(View itemView) {
             super(itemView);

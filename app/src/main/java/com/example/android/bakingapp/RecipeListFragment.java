@@ -39,7 +39,7 @@ public class RecipeListFragment extends Fragment {
 
     private Recipe[] recipes;
     // Get a reference to the RecyclerView
-    @BindView(R.id.recipeNameRecyclerView) RecyclerView mRecipeRecyclerView;
+    @BindView(R.id.recipe_name_recycler_view) RecyclerView mRecipeRecyclerView;
     private Adapter mRecipeAdapter;
     private LayoutManager mLayoutManager;
 

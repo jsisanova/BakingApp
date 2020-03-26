@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,16 +36,16 @@ public class RecipeDetailFragment extends Fragment {
     // To see ingredients after rotation when opened
     Boolean isShowingDialog = false;
 
-    @BindView(R.id.recipeTitle) TextView recipeTitleTV;
+    @BindView(R.id.recipe_title) TextView recipeTitleTV;
     @BindView(R.id.servings) TextView recipeServingsTV;
-    @BindView(R.id.updateRecipeIngredientsWidgetButton) TextView addToWidgetButton;
-    @BindView(R.id.ingredientsCardView) CardView ingredientsCV;
+    @BindView(R.id.update_recipe_ingredients_widget_button) TextView addToWidgetButton;
+    @BindView(R.id.ingredients_CardView) CardView ingredientsCV;
 
-    @BindView(R.id.ingredientsRecyclerView) RecyclerView mIngredientsRecyclerView;
+    @BindView(R.id.ingredients_recyclerView) RecyclerView mIngredientsRecyclerView;
     private Adapter mIngredientsAdapter;
     private LayoutManager mIngredientsLayoutManager;
 
-    @BindView(R.id.stepsRecyclerView) RecyclerView mStepsRecyclerView;
+    @BindView(R.id.steps_recyclerView) RecyclerView mStepsRecyclerView;
     private Adapter mStepsAdapter;
     private LayoutManager mStepsLayoutManager;
 

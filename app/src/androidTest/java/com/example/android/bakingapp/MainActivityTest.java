@@ -47,38 +47,38 @@ public class MainActivityTest {
     public void clickRecipeNameListItem_OpensDetailFragment() {
         // Find the view
         // Perform action on view
-        ViewInteraction recyclerView = onView(withId(R.id.recipeNameRecyclerView));
+        ViewInteraction recyclerView = onView(withId(R.id.recipe_name_recycler_view));
         recyclerView.perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         // Check if the view does what you expected
-        onView(withId(R.id.detailScrollview)).check(matches(isDisplayed()));
+        onView(withId(R.id.ingredients_CardView)).check(matches(isDisplayed()));
         onView(withText(INGREDIENT_QUANTITY_TV)).check(matches(isDisplayed()));
     }
 
     @Test
     public void clickRV() {
-        onView(withId(R.id.recipeNameRecyclerView)).perform(click());
+        onView(withId(R.id.recipe_name_recycler_view)).perform(click());
     }
 
     @Test
     public void scrollRV() {
-        onView(withId(R.id.recipeNameRecyclerView)).perform(RecyclerViewActions.scrollToPosition(1))
+        onView(withId(R.id.recipe_name_recycler_view)).perform(RecyclerViewActions.scrollToPosition(1))
                 .perform(click());
         onView(withText(BROWNIES_TV)).check(matches(isDisplayed()));
     }
 
     @Test
     public void scrollToFirstPositionOfRecyclerView_DisplaysNutellaPie() {
-        onView(withId(R.id.recipeNameRecyclerView)).check(matches(isDisplayed()));
-        onView(withId(R.id.recipeNameRecyclerView)).perform(RecyclerViewActions.scrollToPosition(0));
+        onView(withId(R.id.recipe_name_recycler_view)).check(matches(isDisplayed()));
+        onView(withId(R.id.recipe_name_recycler_view)).perform(RecyclerViewActions.scrollToPosition(0));
         onView(withText(NUTELLA_PIE_TV)).check(matches(isDisplayed()));
     }
 
 
     @Test
     public void clickFirstPositionRecyclerView_DisplaysNutellaPie() {
-        onView(ViewMatchers.withId(R.id.recipeNameRecyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, scrollTo()));
+        onView(ViewMatchers.withId(R.id.recipe_name_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, scrollTo()));
         onView(withText(NUTELLA_PIE_TV)).perform(click());
-        onView(withId(R.id.recipeTitle)).check(matches(withText(NUTELLA_PIE_TV)));
+        onView(withId(R.id.recipe_title)).check(matches(withText(NUTELLA_PIE_TV)));
     }
 }

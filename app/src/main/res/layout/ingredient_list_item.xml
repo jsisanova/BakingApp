@@ -14,41 +14,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="35sp"
-        android:text="\u2022"
+        android:text="@string/bullet"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/ingredientQuantityTextView"
-        android:layout_width="0dp"
+        android:id="@+id/ingredient_quantity_tv"
+        android:layout_width="@dimen/zero_width"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginStart="@dimen/general_margin_and_padding"
+        android:layout_marginTop="@dimen/ingredient_margin_top"
         android:textSize="18sp"
-        tools:text="2"
+        tools:text="@string/ingredient_quantity_muster_tv"
         app:layout_constraintStart_toEndOf="@id/bullet"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/ingredientMeasureTextView"
-        android:layout_width="0dp"
+        android:id="@+id/ingredient_measure_tv"
+        android:layout_width="@dimen/zero_width"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginStart="@dimen/general_margin_and_padding"
+        android:layout_marginTop="@dimen/ingredient_margin_top"
         android:textSize="18sp"
-        tools:text="spoons"
-        app:layout_constraintStart_toEndOf="@id/ingredientQuantityTextView"
+        tools:text="@string/ingredient_measure_muster_tv"
+        app:layout_constraintStart_toEndOf="@id/ingredient_quantity_tv"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/ingredientNameTextView"
-        android:layout_width="0dp"
+        android:id="@+id/ingredient_name_tv"
+        android:layout_width="@dimen/zero_width"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginStart="@dimen/general_margin_and_padding"
+        android:layout_marginTop="@dimen/ingredient_margin_top"
         android:textSize="18sp"
-        tools:text="sugar"
+        tools:text="@string/ingredient_name_muster_tv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ingredientMeasureTextView"
+        app:layout_constraintStart_toEndOf="@+id/ingredient_measure_tv"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

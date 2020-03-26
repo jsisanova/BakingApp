@@ -9,12 +9,12 @@
 
     <!--ingredient list item for widget-->
     <TextView
-        android:id="@+id/widgetSingleIngredientTV"
+        android:id="@+id/widget_single_ingredient_TV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:paddingStart="16dp"
         android:paddingTop="8dp"
         android:textSize="18sp"
-        tools:text="10 cups milk" />
+        tools:text="@string/widget_single_ingredient_muster_tv" />
 </LinearLayout>

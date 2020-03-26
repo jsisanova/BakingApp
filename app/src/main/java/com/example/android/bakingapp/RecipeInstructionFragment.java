@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.utils.Constants;
@@ -36,9 +35,9 @@ public class RecipeInstructionFragment extends Fragment {
     private ArrayList<Step> steps;
     private Step step;
 
-    @BindView(R.id.previousButton) Button previousButton;
-    @BindView(R.id.nextButton) Button nextButton;
-    @BindView(R.id.stepsDescriptionTextView) TextView stepDescriptionTV;
+    @BindView(R.id.previous_button) Button previousButton;
+    @BindView(R.id.next_button) Button nextButton;
+    @BindView(R.id.steps_description_tv) TextView stepDescriptionTV;
 
     // Source: https://codelabs.developers.google.com/codelabs/exoplayer-intro/#0
     // variables for ExoPlayer
@@ -90,7 +89,7 @@ public class RecipeInstructionFragment extends Fragment {
 
         // Instantiate the Listener
         playbackStateListener = new PlaybackStateListener();
-        playerView = rootview.findViewById(R.id.stepVideoPlayerView);
+        playerView = rootview.findViewById(R.id.step_videoPlayerView);
 
         setupButtonsAndViews(step);
 

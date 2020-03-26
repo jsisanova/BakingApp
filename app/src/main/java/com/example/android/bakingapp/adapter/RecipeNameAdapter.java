@@ -32,9 +32,9 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Vi
     // Provide a reference to the item views in viewholder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.recipeName) TextView recipeNameTV;
+        @BindView(R.id.recipe_name) TextView recipeNameTV;
             // needed to set visibility to GONE by last item
-        @BindView(R.id.recipeDivider) View divider;
+        @BindView(R.id.recipe_divider) View divider;
 
         public ViewHolder(ConstraintLayout itemView) {
             super(itemView);

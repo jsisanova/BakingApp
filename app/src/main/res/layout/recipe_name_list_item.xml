@@ -9,9 +9,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/recipeName"
+        android:id="@+id/recipe_name"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/recipe_name_height"
         android:gravity="center"
         android:fontFamily="serif-monospace"
         android:textAllCaps="true"
@@ -21,17 +21,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="RECIPE NAME" />
+        tools:text="@string/recipe_name_muster_tv" />
 
     <!--divider-->
     <View
-        android:id="@+id/recipeDivider"
-        android:layout_width="0dp"
-        android:layout_height="1.5dp"
+        android:id="@+id/recipe_divider"
+        android:layout_width="@dimen/divider_width"
+        android:layout_height="@dimen/divider_height"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipeName" />
+        app:layout_constraintTop_toBottomOf="@+id/recipe_name" />
 
 </android.support.constraint.ConstraintLayout>

@@ -36,7 +36,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHolder> {
     // Provide a reference to the item views in viewholder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.stepsShortDescriptionTextView) TextView stepShortDescriptionTV;
+        @BindView(R.id.steps_short_description_tv) TextView stepShortDescriptionTV;
 
         public ViewHolder(View itemView) {
             super(itemView);
