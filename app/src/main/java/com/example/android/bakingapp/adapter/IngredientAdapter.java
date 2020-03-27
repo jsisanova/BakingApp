@@ -31,8 +31,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.ingredient_quantity_tv) TextView ingredientQuantityTV;
-        @BindView (R.id.ingredient_name_tv) TextView ingredientNameTV;
         @BindView (R.id.ingredient_measure_tv) TextView ingredientMeasureTV;
+        @BindView (R.id.ingredient_name_tv) TextView ingredientNameTV;
 
         public ViewHolder(View itemView) {
             super(itemView);

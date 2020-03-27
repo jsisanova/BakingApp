@@ -22,10 +22,10 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements RecipeListFragment.OnRecipeSelectedListener, RecipeDetailFragment.OnStepSelectedListener {
 
-    // Bcs of SnackBar; cannot be local variable
+    // Bcs of SnackBar; @BindView not applicable for local variable
     @BindView(R.id.coordinator_layout) View coordinator_layout;
     // To check if it is tablet
-    @BindBool(R.bool.isTablet)  boolean isTwoPane;
+    @BindBool(R.bool.isTablet) boolean isTwoPane;
 
 
     @Override
@@ -86,14 +86,13 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
     public void onStepSelected(List<Step> steps, int position) {
 
         // Check if online
-        if (isOnline ()) {
+        if (isOnline()) {
             // Pass an object that implements Parcelable btw. fragments
             Bundle bundle = new Bundle();
             // Make ArrayList from List to avoid ClassCastException
             ArrayList<Step> stepsArrayList = new ArrayList<>(steps);
             bundle.putParcelableArrayList(Constants.STEPS_KEY, stepsArrayList);
             bundle.putParcelable(Constants.STEP_KEY, steps.get(position));
-
 
             RecipeInstructionFragment fragment = new RecipeInstructionFragment();
             // Parse the object to the fragment as a bundle;

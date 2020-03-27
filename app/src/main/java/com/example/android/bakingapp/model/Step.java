@@ -8,7 +8,6 @@ public class Step implements Parcelable {
     private String stepShortDescription;
     private String stepDescription;
     private String stepVideoUrl;
-    private String stepThumbnailUrl;
 
     public Step() { }
 
@@ -22,9 +21,6 @@ public class Step implements Parcelable {
     }
     public void setStepShortDescription(String stepShortDescription) {
         this.stepShortDescription = stepShortDescription;
-    }
-    public void setStepThumbnailUrl(String stepThumbnailUrl) {
-        this.stepThumbnailUrl = stepThumbnailUrl;
     }
     public void setStepVideoUrl(String stepVideoUrl) {
         this.stepVideoUrl = stepVideoUrl;
@@ -43,9 +39,6 @@ public class Step implements Parcelable {
     public String getStepVideoUrl() {
         return stepVideoUrl;
     }
-    public String getStepThumbnailUrl() {
-        return stepThumbnailUrl;
-    }
 
 
     // Use Android Parcelable interface to transfer object and its data between activities
@@ -58,7 +51,6 @@ public class Step implements Parcelable {
         dest.writeString(stepShortDescription);
         dest.writeString(stepDescription);
         dest.writeString(stepVideoUrl);
-        dest.writeString(stepThumbnailUrl);
     }
 
 
@@ -74,7 +66,6 @@ public class Step implements Parcelable {
         stepShortDescription = parcel.readString();
         stepDescription = parcel.readString();
         stepVideoUrl = parcel.readString();
-        stepThumbnailUrl = parcel.readString();
     }
 
     // This method binds everything together. There’s little needed to do here as the createFromParcel method will return newly populated object.

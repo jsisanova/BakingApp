@@ -11,10 +11,9 @@ public class Recipe implements Parcelable {
 
     private int recipeId;
     private String recipeName;
+    private List<Ingredient> ingredients = null;
     private List<Step> steps = null;
     private int servings;
-    private String imagePath;
-    private List<Ingredient> ingredients = null;
 
     public Recipe() { }
 
@@ -26,17 +25,14 @@ public class Recipe implements Parcelable {
     public void setRecipeName(String recipeName) {
         this.recipeName = recipeName;
     }
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
     public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
     public void setServings(int servings) {
         this.servings = servings;
-    }
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
     }
 
     // Getter methods
@@ -46,18 +42,16 @@ public class Recipe implements Parcelable {
     public String getRecipeName() {
         return recipeName;
     }
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
     public List<Step> getSteps() {
         return steps;
     }
     public int getServings() {
         return servings;
     }
-    public String getImagePath() {
-        return imagePath;
-    }
-    public List<Ingredient> getIngredients() {
-        return ingredients;
-    }
+
 
 
     // Use Android Parcelable interface to transfer object and its data between activities
@@ -65,12 +59,11 @@ public class Recipe implements Parcelable {
 
     // Add object values to Parcel in preparation for transfer
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt (recipeId);
+        dest.writeInt(recipeId);
         dest.writeString(recipeName);
+        dest.writeList(ingredients);
         dest.writeList(steps);
         dest.writeInt(servings);
-        dest.writeString(imagePath);
-        dest.writeList(ingredients);
     }
 
     // This method is the constructor, called on the receiving activity, where you will be collecting values.
@@ -84,14 +77,13 @@ public class Recipe implements Parcelable {
         recipeId = parcel.readInt();
         recipeName = parcel.readString();
 
+        ingredients = new ArrayList<>();
+        parcel.readList(ingredients, Recipe.class.getClassLoader());
+
         steps = new ArrayList<> ();
         parcel.readList(steps, Step.class.getClassLoader());
 
         servings = parcel.readInt();
-        imagePath = parcel.readString();
-
-        ingredients = new ArrayList<>();
-        parcel.readList(ingredients, Recipe.class.getClassLoader());
     }
 
     // This method binds everything together. There’s little needed to do here as the createFromParcel method will return newly populated object.

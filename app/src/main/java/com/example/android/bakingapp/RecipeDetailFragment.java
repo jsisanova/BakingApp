@@ -2,6 +2,7 @@ package com.example.android.bakingapp;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -39,8 +40,8 @@ public class RecipeDetailFragment extends Fragment {
     @BindView(R.id.recipe_title) TextView recipeTitleTV;
     @BindView(R.id.servings) TextView recipeServingsTV;
     @BindView(R.id.update_recipe_ingredients_widget_button) TextView addToWidgetButton;
-    @BindView(R.id.ingredients_CardView) CardView ingredientsCV;
 
+    @BindView(R.id.ingredients_CardView) CardView ingredientsCV;
     @BindView(R.id.ingredients_recyclerView) RecyclerView mIngredientsRecyclerView;
     private Adapter mIngredientsAdapter;
     private LayoutManager mIngredientsLayoutManager;
@@ -82,7 +83,7 @@ public class RecipeDetailFragment extends Fragment {
         if (getArguments() != null) {
             recipe = getArguments().getParcelable(Constants.RECIPE_KEY);
         }
-        Log.e("Recipe Detail: ", String.valueOf(recipe.getRecipeName()));
+        Log.e("Recipe Detail: ", recipe.getRecipeName());
 
         if(((AppCompatActivity)getActivity()).getSupportActionBar() != null) {
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(Constants.DETAILS_TITLE);
@@ -110,7 +111,6 @@ public class RecipeDetailFragment extends Fragment {
         //specify adapter
         mIngredientsAdapter = new IngredientAdapter(recipe.getIngredients(), getContext());
         mIngredientsRecyclerView.setAdapter(mIngredientsAdapter);
-        mIngredientsRecyclerView.setNestedScrollingEnabled(false);
 
         ingredientsCV.setOnClickListener(v -> {
             if (mIngredientsRecyclerView.getVisibility() == View.VISIBLE) {
@@ -133,7 +133,7 @@ public class RecipeDetailFragment extends Fragment {
 
 
         // Add to widget button
-        addToWidgetButton.setOnClickListener(view1 -> {
+        addToWidgetButton.setOnClickListener(view -> {
             // Launch a service
             UpdateIngredientsService.startActionUpdateIngredients(getContext(), recipe);
             Toast.makeText(getActivity(), "Recipe:  " + recipe.getRecipeName() + " added to Widget.", Toast.LENGTH_SHORT).show();
@@ -147,7 +147,7 @@ public class RecipeDetailFragment extends Fragment {
     // Source: https://stackoverflow.com/questions/5592866/how-do-i-handle-screen-orientation-changes-when-a-dialog-is-open
     // To see list of ingredients when opened, also after rotation
     @Override
-    public void onSaveInstanceState(Bundle state) {
+    public void onSaveInstanceState(@NonNull Bundle state) {
         super.onSaveInstanceState(state);
         state.putBoolean(Constants.IS_SHOWING_DIALOG_KEY, isShowingDialog);
     }
@@ -164,4 +164,3 @@ public class RecipeDetailFragment extends Fragment {
         }
     }
 }
-
