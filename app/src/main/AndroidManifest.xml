@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
 
-        <!-- Add a reciever tag for WidgetProvider and an intent-filter for APPWIDGET_UPDATE with meta data pointing to the widget_provider_info file -->
+        <!-- Add a receiver tag for WidgetProvider and an intent-filter for APPWIDGET_UPDATE with meta data pointing to the widget_provider_info file -->
         <receiver
             android:name=".widget.BakingAppWidgetProvider">
             <intent-filter>

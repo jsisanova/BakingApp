@@ -16,7 +16,7 @@
 
     <FrameLayout
         android:id="@+id/recipe_list"
-        android:name="co.asterv.myapplication.RecipeListFragment"
+        android:name="com.example.android.bakingapp.RecipeListFragment"
         android:layout_width="@dimen/zero_width"
         android:layout_height="match_parent"
         android:layout_weight="3"

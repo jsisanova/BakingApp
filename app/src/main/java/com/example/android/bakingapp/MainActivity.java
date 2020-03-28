@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
             fragment.setArguments(bundle);
 
             // Source: https://medium.com/@bherbst/managing-the-fragment-back-stack-373e87e4ff62
-            // Clean back stack - when back button & up button is presed after going through detail steps (subscreen), I return to RecipeDetailFragment and not to previous step
+            // Clean back stack - when back button & up button is pressed after going through detail steps (subscreen), I return to RecipeDetailFragment and not to previous step
             // Pop off everything up to and including the current tab
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager

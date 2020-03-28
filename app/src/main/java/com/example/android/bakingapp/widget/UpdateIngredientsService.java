@@ -28,7 +28,7 @@ public class UpdateIngredientsService extends IntentService {
 
 
     public UpdateIngredientsService() {
-        super ("UpdateIngedientsService");
+        super("UpdateIngredientsService");
     }
 
     /**

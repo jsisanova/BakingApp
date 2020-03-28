@@ -53,7 +53,7 @@ public class RecipeDetailFragment extends Fragment {
     // Define a new interface OnStepSelectedListener that triggers a callback in the host activity (MainActivity)
     RecipeDetailFragment.OnStepSelectedListener mCallback;
 
-    // OnStepelectedListener interface, calls a method in the host activity named onStepSelected
+    // OnStepSelectedListener interface, calls a method in the host activity named onStepSelected
     public interface OnStepSelectedListener {
         void onStepSelected(List<Step> steps, int position);
     }

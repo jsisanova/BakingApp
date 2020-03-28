@@ -59,7 +59,7 @@ class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
      * It returns a RemoteViews object at the specific position which in our case is the single list item
      *
      * @param position The current position of the item in the ListView to be displayed
-     * @return The RemoteViews object to display for the provided postion
+     * @return The RemoteViews object to display for the provided position
      */
     @Override
     public RemoteViews getViewAt(int position) {
