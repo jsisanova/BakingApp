@@ -60,4 +60,9 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'recyclerview-v7'
     }
+
+
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    // GSON: A library used for the data serialization - to convert Java Objects into JSON and back
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 }

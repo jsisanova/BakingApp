@@ -12,17 +12,19 @@ import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.RecipeListFragment;
 import com.example.android.bakingapp.model.Recipe;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.ViewHolder> {
 
-    private Recipe[] recipes;
+    private List<Recipe> recipes;
     private Context context;
     RecipeListFragment.OnRecipeSelectedListener listener;
 
     // Pass data into the constructor
-    public RecipeNameAdapter(Recipe[] recipes, Context context, RecipeListFragment.OnRecipeSelectedListener listener) {
+    public RecipeNameAdapter(List<Recipe> recipes, Context context, RecipeListFragment.OnRecipeSelectedListener listener) {
         this.recipes = recipes;
         this.context = context;
         this.listener = listener;
@@ -58,19 +60,19 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Get element from the dataset at this position
         // Replace the contents of the view with that element
-        String recipeName = recipes[position].getRecipeName();
+        String recipeName = recipes.get(position).getRecipeName();
         holder.recipeNameTV.setText(recipeName);
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onRecipeSelected(recipes[position]);
+                listener.onRecipeSelected(recipes.get(position));
             }
         });
 
         // Set visibility of divider to GONE by last item (if not tablet)
         boolean isTablet = context.getResources().getBoolean(R.bool.isTablet);
         if (!isTablet) {
-            if (position == recipes.length - 1) {
+            if (position == recipes.size() - 1) {
                 holder.divider.setVisibility(View.GONE);
             }
         }
@@ -80,9 +82,9 @@ public class RecipeNameAdapter extends RecyclerView.Adapter<RecipeNameAdapter.Vi
     // Return the size of your dataset (invoked by the Layout Manager)
     @Override
     public int getItemCount() {
-        if (recipes == null || recipes.length == 0) {
+        if (recipes == null || recipes.size() == 0) {
             return -1;
         }
-        return recipes.length;
+        return recipes.size();
     }
 }

@@ -8,7 +8,7 @@ public class Constants {
 
 
     // JSON constants
-    final static String BAKING_APP_JSON_DATA_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+//    final static String BAKING_APP_JSON_DATA_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
     public final static String ID_KEY = "id";
     public final static String NAME_KEY = "name";
     public final static String INGREDIENTS_KEY = "ingredients";

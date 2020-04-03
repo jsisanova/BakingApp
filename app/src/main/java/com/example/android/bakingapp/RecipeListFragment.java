@@ -11,17 +11,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.LayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.android.bakingapp.adapter.RecipeNameAdapter;
 import com.example.android.bakingapp.model.Ingredient;
 import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.utils.Constants;
-import com.example.android.bakingapp.utils.JsonUtils;
+import com.example.android.bakingapp.utils.GetDataService;
+import com.example.android.bakingapp.utils.RetrofitClientInstance;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,10 +32,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 // This fragment displays all of the recipe names in one list (as RecyclerView)
 public class RecipeListFragment extends Fragment {
@@ -95,121 +103,156 @@ public class RecipeListFragment extends Fragment {
         }
 
 
-        new FetchRecipeDataAsyncTask().execute();
+        /* Retrofit class generates an implementation of the RetrofitClientInstance interface*/
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+
+        // Each Call from the created GetDataService can make a synchronous or asynchronous HTTP request to the remote webserver.
+        Call<List<Recipe>> call = service.getAllRecipes();
+        // enqueue() asynchronously sends the request and notifies your app with a callback when a response comes back.
+        // Since this request is asynchronous, Retrofit handles it on a background thread so that the main UI thread isn't blocked or interfered with.
+        //To use enqueue(), you have to implement two callback methods:
+        // onResponse()
+        // onFailure()
+        call.enqueue(new Callback<List<Recipe>>() {
+
+            @Override
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                if(response.isSuccessful()) {
+
+                    List<Recipe> recipeList = response.body();
+
+                    // Create the adapter and Set the adapter on the RecyclerView
+                    mRecipeAdapter = new RecipeNameAdapter(recipeList, getContext(), mCallback);
+                    mRecipeRecyclerView.setAdapter(mRecipeAdapter);
+
+                } else {
+                    Log.e("RecipeListFragment", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                Toast.makeText(getActivity().getApplicationContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Log.e("RecipeListFragment", t.getMessage());
+            }
+        });
+
+
+//        new FetchRecipeDataAsyncTask().execute();
 
         // Return the rootview
         return rootview;
     }
 
 
-    // Change string of json recipes data to an ARRAY OF RECIPE OBJECTS
-    public Recipe[] changeRecipesDataToArray(String recipesJsonResults) throws JSONException {
+//    // Change string of json recipes data to an ARRAY OF RECIPE OBJECTS
+//    public Recipe[] changeRecipesDataToArray(String recipesJsonResults) throws JSONException {
+//
+//        // Get results as an array
+//        JSONArray resultsArray = new JSONArray(recipesJsonResults);
+//
+//        // Create array of Recipe objects that stores data from the JSON string
+//        recipes = new Recipe[resultsArray.length()];
+//
+//        // Iterate through recipes and get data
+//        for (int i = 0; i < resultsArray.length(); i++) {
+//            // Initialize each object before it can be used
+//            recipes[i] = new Recipe();
+//
+//            // Object contains all tags we're looking for
+//            JSONObject recipeInfo = resultsArray.getJSONObject(i);
+//
+//            // Store data in recipe object
+//            recipes[i].setRecipeName(recipeInfo.getString(Constants.NAME_KEY));
+//            recipes[i].setRecipeId(recipeInfo.getInt(Constants.ID_KEY));
+//            recipes[i].setServings(recipeInfo.getInt(Constants.SERVINGS_KEY));
+//
+//
+//            // Get ingredients as an array
+//            JSONArray ingredientsArray = recipeInfo.getJSONArray(Constants.INGREDIENTS_KEY);
+//            // Create array of Ingredient objects that stores data from the JSON string
+//            ingredients = new Ingredient[ingredientsArray.length()];
+//
+//            // Iterate through ingredients and get data
+//            for (int j = 0; j < ingredientsArray.length(); j++) {
+//                // Initialize each object before it can be used
+//                ingredients[j] = new Ingredient();
+//
+//                // Object contains all tags we're looking for
+//                JSONObject ingredientInfo = ingredientsArray.getJSONObject(j);
+//
+//                // Store data in ingredient object
+//                ingredients[j].setIngredientsQuantity(ingredientInfo.getDouble(Constants.INGREDIENTS_QUANTITY_KEY));
+//                ingredients[j].setIngredientsMeasure(ingredientInfo.getString(Constants.INGREDIENTS_MEASURE_KEY).toLowerCase());
+//                ingredients[j].setIngredientsName(ingredientInfo.getString (Constants.INGREDIENTS_NAME_KEY));
+//            }
+//
+//
+//            // Get steps as an array
+//            JSONArray stepsArray = recipeInfo.getJSONArray(Constants.STEPS_KEY);
+//            // Create array of Steps objects that stores data from the JSON string
+//            steps = new Step[stepsArray.length()];
+//
+//            // Iterate through steps and get data
+//            for (int k = 0; k < stepsArray.length(); k++) {
+//                // Initialize each object before it can be used
+//                steps[k] = new Step();
+//
+//                // Object contains all tags we're looking for
+//                JSONObject stepInfo = stepsArray.getJSONObject(k);
+//
+//                // Store data in step object
+//                steps[k].setStepId(stepInfo.getInt(Constants.ID_KEY));
+//                steps[k].setStepShortDescription(stepInfo.getString(Constants.STEPS_SHORT_DESCRIPTION_KEY));
+//                steps[k].setStepDescription(stepInfo.getString(Constants.STEPS_LONG_DESCRIPTION_KEY));
+//
+//                if (stepInfo.getString(Constants.STEPS_VIDEO_URL_KEY).equals("")) {
+//                    steps[k].setStepVideoUrl(null);
+//                } else {
+//                    steps[k].setStepVideoUrl(stepInfo.getString(Constants.STEPS_VIDEO_URL_KEY));
+//                }
+//            }
+//
+//            recipes[i].setIngredients(Arrays.asList(ingredients));
+//            recipes[i].setSteps(Arrays.asList(steps));
+//        }
+//        return recipes;
+//    }
 
-        // Get results as an array
-        JSONArray resultsArray = new JSONArray(recipesJsonResults);
 
-        // Create array of Recipe objects that stores data from the JSON string
-        recipes = new Recipe[resultsArray.length()];
-
-        // Iterate through recipes and get data
-        for (int i = 0; i < resultsArray.length(); i++) {
-            // Initialize each object before it can be used
-            recipes[i] = new Recipe();
-
-            // Object contains all tags we're looking for
-            JSONObject recipeInfo = resultsArray.getJSONObject(i);
-
-            // Store data in recipe object
-            recipes[i].setRecipeName(recipeInfo.getString(Constants.NAME_KEY));
-            recipes[i].setRecipeId(recipeInfo.getInt(Constants.ID_KEY));
-            recipes[i].setServings(recipeInfo.getInt(Constants.SERVINGS_KEY));
-
-
-            // Get ingredients as an array
-            JSONArray ingredientsArray = recipeInfo.getJSONArray(Constants.INGREDIENTS_KEY);
-            // Create array of Ingredient objects that stores data from the JSON string
-            ingredients = new Ingredient[ingredientsArray.length()];
-
-            // Iterate through ingredients and get data
-            for (int j = 0; j < ingredientsArray.length(); j++) {
-                // Initialize each object before it can be used
-                ingredients[j] = new Ingredient();
-
-                // Object contains all tags we're looking for
-                JSONObject ingredientInfo = ingredientsArray.getJSONObject(j);
-
-                // Store data in ingredient object
-                ingredients[j].setIngredientsQuantity(ingredientInfo.getDouble(Constants.INGREDIENTS_QUANTITY_KEY));
-                ingredients[j].setIngredientsMeasure(ingredientInfo.getString(Constants.INGREDIENTS_MEASURE_KEY).toLowerCase());
-                ingredients[j].setIngredientsName(ingredientInfo.getString (Constants.INGREDIENTS_NAME_KEY));
-            }
-
-
-            // Get steps as an array
-            JSONArray stepsArray = recipeInfo.getJSONArray(Constants.STEPS_KEY);
-            // Create array of Steps objects that stores data from the JSON string
-            steps = new Step[stepsArray.length()];
-
-            // Iterate through steps and get data
-            for (int k = 0; k < stepsArray.length(); k++) {
-                // Initialize each object before it can be used
-                steps[k] = new Step();
-
-                // Object contains all tags we're looking for
-                JSONObject stepInfo = stepsArray.getJSONObject(k);
-
-                // Store data in step object
-                steps[k].setStepId(stepInfo.getInt(Constants.ID_KEY));
-                steps[k].setStepShortDescription(stepInfo.getString(Constants.STEPS_SHORT_DESCRIPTION_KEY));
-                steps[k].setStepDescription(stepInfo.getString(Constants.STEPS_LONG_DESCRIPTION_KEY));
-
-                if (stepInfo.getString(Constants.STEPS_VIDEO_URL_KEY).equals("")) {
-                    steps[k].setStepVideoUrl(null);
-                } else {
-                    steps[k].setStepVideoUrl(stepInfo.getString(Constants.STEPS_VIDEO_URL_KEY));
-                }
-            }
-
-            recipes[i].setIngredients(Arrays.asList(ingredients));
-            recipes[i].setSteps(Arrays.asList(steps));
-        }
-        return recipes;
-    }
-
-
-    // Use AsyncTask to fetch recipes data
-    private class FetchRecipeDataAsyncTask extends AsyncTask<String, Void, Recipe[]> {
-
-        public FetchRecipeDataAsyncTask() {
-            super();
-        }
-
-        @Override
-        protected Recipe[] doInBackground(String... params) {
-
-            try {
-                URL url = JsonUtils.buildBakingAppUrl();
-                // Holds data returned from the json
-                String bakingResults = JsonUtils.getResponseFromHttpUrl(url);
-
-                if(bakingResults == null) {
-                    return null;
-                }
-                // Call method to change string of recipes data to an ARRAY OF RECIPE OBJECTS
-                return changeRecipesDataToArray(bakingResults);
-
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        protected void onPostExecute(Recipe[] recipes) {
-            // Create the adapter and Set the adapter on the RecyclerView
-            mRecipeAdapter = new RecipeNameAdapter(recipes, getContext(), mCallback);
-            mRecipeRecyclerView.setAdapter(mRecipeAdapter);
-        }
-    }
+//    // Use AsyncTask to fetch recipes data
+//    private class FetchRecipeDataAsyncTask extends AsyncTask<String, Void, Recipe[]> {
+//
+//        public FetchRecipeDataAsyncTask() {
+//            super();
+//        }
+//
+//        @Override
+//        protected Recipe[] doInBackground(String... params) {
+//
+//            try {
+//                URL url = JsonUtils.buildBakingAppUrl();
+//                // Holds data returned from the json
+//                String bakingResults = JsonUtils.getResponseFromHttpUrl(url);
+//
+//                if(bakingResults == null) {
+//                    return null;
+//                }
+//                // Call method to change string of recipes data to an ARRAY OF RECIPE OBJECTS
+//                return changeRecipesDataToArray(bakingResults);
+//
+//            } catch (IOException | JSONException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//        protected void onPostExecute(Recipe[] recipes) {
+//            // Create the adapter and Set the adapter on the RecyclerView
+//            mRecipeAdapter = new RecipeNameAdapter(recipes, getContext(), mCallback);
+//            mRecipeRecyclerView.setAdapter(mRecipeAdapter);
+//        }
+//    }
 
 
     // Source (2nd solution): https://stackoverflow.com/questions/28236390/recyclerview-store-restore-state-between-activities
